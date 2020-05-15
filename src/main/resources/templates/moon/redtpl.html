@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>MOON</title>
+<link rel="stylesheet" th:href="@{/moon/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/icon/css/font-awesome.min.css}" />
+</head>
+<body class="bg-b">
+	<div class="container-fluid" id="app">
+		<div class="row">
+			<div class="col text-center bg-danger text-white shadow">基础操作</div>
+		</div>
+		<div class="mt-2">
+			<button class="btn btn-sm btn-info" onclick="commit();">确定</button>
+		</div>
+	</div>
+	<!-- js -->
+	<script th:src="@{/moon/js/jquery.js}"></script>
+	<script th:src="@{/moon/js/vue.js}"></script>
+	<script th:src="@{/layer/layer.js}"></script>
+	<script th:inline="javascript">
+		//commit
+		function commit() {
+			$.post("/redis/test", {}, function(data) {
+				alert(data);
+			});
+		}
+	</script>
+</body>
+</html>

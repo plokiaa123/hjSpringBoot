@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>MOON</title>
+<link rel="stylesheet" th:href="@{/moon/css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/icon/css/font-awesome.min.css}" />
+</head>
+<body class="bg-c">
+	<div class="container-fluid" id="app">
+		<div class="row mt-3">
+			<div class="col-sm-6 offset-sm-3">
+				<div class="card border-light">
+					<div class="card-header text-center text-white bg-info">用戶中心</div>
+					<div class="card-body">
+						<table class="table table-sm table-light">
+							<tr class="border-light">
+								<td>昵称</td>
+								<td>真名</td>
+							</tr>
+							<tr>
+								<td><input class="form-control form-control-sm" type="text"
+									th:value="${u.nickname}" /></td>
+								<td><input class="form-control form-control-sm" type="text"
+									th:value="${u.realname}" /></td>
+							</tr>
+						</table>
+						<div class="mt-5">
+							<button class="btn btn-sm btn-outline-info ml-2">更新</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- js -->
+	<script th:src="@{/moon/js/jquery.js}"></script>
+	<script th:src="@{/moon/js/vue.js}"></script>
+	<script th:src="@{/layer/layer.js}"></script>
+	<script th:inline="javascript">
+		//
+	</script>
+</body>
+</html>
