@@ -25,7 +25,7 @@
 			targetProject="${autocoder.project.src}" />
 		<javaClientGenerator targetPackage="${autocoder.persist.dao}"
 			targetProject="${autocoder.project.src}" type="XMLMAPPER" />
-		<table tableName="%">
+		<table tableName="poetry">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
 	</context>
