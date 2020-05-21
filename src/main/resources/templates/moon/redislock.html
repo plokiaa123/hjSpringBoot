@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8" />
+            <title>商品秒杀</title>
+            <link rel="stylesheet" th:href="@{/moon/css/bootstrap.css}" />
+            <link rel="stylesheet" th:href="@{/icon/css/font-awesome.min.css}" />
+        </head>
+<body class="bg-c">
+<div class="container-fluid" id="app">
+    <div class="row">
+        <div class="col text-center bg-success text-white shadow">商品秒杀</div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm-4 offset-4">
+            <div class="card border-light shadow">
+                <div class="card-header text-center">兰博基尼</div>
+                <div class="card-body"><img th:src="@{/img/lbjn.jpg}" ></div>
+                <button class="btn btn-info btn-lg" id="purchase" onclick="purchase()">购买</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- js -->
+<script th:src="@{/moon/js/jquery.js}"></script>
+<script th:src="@{/moon/js/vue.js}"></script>
+<script th:src="@{/layer/layer.js}"></script>
+<script th:inline="javascript">
+    function purchase() {
+        $.post("/redis/redislock",{"goodsName":"兰博基尼"},function (data) {
+
+        })
+    }
+    
+</script>
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>
