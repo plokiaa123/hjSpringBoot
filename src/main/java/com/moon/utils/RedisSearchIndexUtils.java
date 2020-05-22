@@ -15,8 +15,8 @@ import java.util.List;
 public class RedisSearchIndexUtils {
     public static void main(String[] args) {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/moonlx?useSSL=false&characterEncoding=UTF-8&serverTimeZone=GMT+8", "root", "root");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/moonlx?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC", "root", "root");
             PreparedStatement pst = conn.prepareStatement("select * from poetry");
             ResultSet rs = pst.executeQuery();
             while(rs.next()) {
@@ -34,7 +34,7 @@ public class RedisSearchIndexUtils {
                     }
                     //导入redis
                     Jedis jedis = new Jedis("127.0.0.1", 6379);
-                    jedis.sadd(s.word, id+"");
+                    jedis.sadd("search:"+s.word, id+"");
                 }
                 //一条数据导入索引成功
                 System.out.println("成功导入索引:" + title);

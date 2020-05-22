@@ -4,6 +4,8 @@ import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.huaban.analysis.jieba.SegToken;
 import com.moon.entity.Poetry;
 import com.moon.service.PoetryService;
+import org.redisson.Redisson;
+import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -15,11 +17,15 @@ import com.moon.utils.BaseController;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("/redis")
 public class RedisController extends BaseController {
+
+    @Autowired
+    private Redisson redisson;
 
     @Autowired
     private PoetryService poetryService;
@@ -36,7 +42,7 @@ public class RedisController extends BaseController {
         for (SegToken segToken : list) {
             //获取redis库中所有的set集合
             SetOperations<String, String> ops = stringRedisTemplate.opsForSet();
-            Set<String> set = ops.members(segToken.word);//得到一个词对应的所有id
+            Set<String> set = ops.members("search:"+segToken.word);//得到一个词对应的所有id
             for (String id : set) {
                 ids += id + ",";
             }
@@ -61,13 +67,16 @@ public class RedisController extends BaseController {
 
     @RequestMapping("/redislock")
     @ResponseBody
-    public String redislock(String goodsName){
+    public String redislock(){
         String product="goods";
+        /*String clientId= UUID.randomUUID().toString();*/
+        RLock redislock = redisson.getLock(product);
         try {
-            Boolean result = stringRedisTemplate.opsForValue().setIfAbsent(product,goodsName,30,TimeUnit.SECONDS);
+            /*Boolean result = stringRedisTemplate.opsForValue().setIfAbsent(product,clientId,30,TimeUnit.SECONDS);
             if (!result){
                 return "error";
-            }
+            }*/
+            redislock.lock();
             int stock=Integer.parseInt(stringRedisTemplate.opsForValue().get("stock"));
             if (stock > 0){
                 int realStock=stock-1;
@@ -77,7 +86,8 @@ public class RedisController extends BaseController {
                 System.out.println("库存不足");
             }
         } finally {
-            stringRedisTemplate.delete(product);
+            /*stringRedisTemplate.delete(product);*/
+            redislock.unlock();
         }
         return "end";
     }

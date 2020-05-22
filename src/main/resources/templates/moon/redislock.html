@@ -19,7 +19,7 @@
         <div class="col-sm-4 offset-4">
             <div class="card border-light shadow">
                 <div class="card-header text-center">兰博基尼</div>
-                <div class="card-body"><img th:src="@{/img/lbjn.jpg}" ></div>
+                <div class="card-body"><img th:src="@{/img/lbjn.jpg}" class="img-thumbnail"></div>
                 <button class="btn btn-info btn-lg" id="purchase" onclick="purchase()">购买</button>
             </div>
         </div>
@@ -33,7 +33,7 @@
 <script th:src="@{/layer/layer.js}"></script>
 <script th:inline="javascript">
     function purchase() {
-        $.post("/redis/redislock",{"goodsName":"兰博基尼"},function (data) {
+        $.post("/redis/redislock",{},function (data) {
 
         })
     }
